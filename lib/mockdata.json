@@ -1,0 +1,52 @@
+{
+    "expense": [
+        {
+            "id": 1,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        },
+        {
+            "id": 2,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        },
+        {
+            "id": 3,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        },
+        {
+            "id": 4,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        },
+        {
+            "id": 5,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        },
+        {
+            "id": 6,
+            "date": "21-01-2022",
+            "merchant": "Petrolimex",
+            "amount": 200000,
+            "paymentMethod": "Cash",
+            "categoryId": "Fuel"
+        }
+    ]
+}

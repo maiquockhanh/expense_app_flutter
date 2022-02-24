@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/screens/Home/components/category/list.dart';
 import 'package:flutter_application_1/screens/Home/components/expense/list.dart';
 import 'package:flutter_application_1/screens/Home/components/user/list.dart';
@@ -25,20 +26,25 @@ class _HomeState extends State<Home> {
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
-    CategoryList(),
     ExpenseList(),
+    CategoryList(),
     UserList()
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions[_selectedIndex ],
-      bottomNavigationBar: CustomNavigationBar(
-        selector: _onItemTapped,
-        widgets: _widgetOptions,
-        currentIndex: _selectedIndex,
-      ),
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          _widgetOptions[_selectedIndex ],
+          CustomNavigationBar(
+            selector: _onItemTapped,
+            widgets: _widgetOptions,
+            currentIndex: _selectedIndex,
+          ),
+        ], 
+      ) 
     );
   }
 }
