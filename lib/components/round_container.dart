@@ -5,10 +5,14 @@ class RoundContainer extends StatelessWidget {
     Key? key,
     required this.child,
     required this.color,
+    this.widthWeight,
+    this.height
   }) :  super(key: key);
 
   final Widget child;
   final Color color;
+  final double? widthWeight;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +28,8 @@ class RoundContainer extends StatelessWidget {
             color: color,
             borderRadius: BorderRadius.circular(30)
           ),
-          width: size.width*0.8,
-          height: 50,
+          width: widthWeight != null? size.width*widthWeight! :size.width*0.8 ,
+          height: height ?? 60,
           //child: child,
         ),
         Container(

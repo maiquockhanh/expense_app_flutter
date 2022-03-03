@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/navigationItem.dart';
+import 'package:flutter_application_1/components/navigation_item.dart';
 import 'package:flutter_application_1/constants.dart';
 
 class CustomNavigationBar extends StatelessWidget {
@@ -18,16 +18,16 @@ class CustomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.06,
-      decoration: BoxDecoration(
-        color: kColorSecondaryLight.withOpacity(0.3),
-        boxShadow: const [
+      decoration: const BoxDecoration(
+        color: kColorSecondaryLight,
+        boxShadow: [
           BoxShadow(
             offset: Offset(0, -15),
             blurRadius: 20,
             color: Color(0x55555555),
           )
         ],
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           topLeft: Radius.circular(50), 
           topRight: Radius.circular(50)
         )

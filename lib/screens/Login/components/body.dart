@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/roundContainer.dart';
+import 'package:flutter_application_1/components/round_container.dart';
 import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/components/input.dart';
 import 'package:flutter_application_1/screens/Home/home.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_application_1/service/login/login_service.dart';
 
 class Body extends StatefulWidget {
 
@@ -17,13 +21,25 @@ class _LoginState extends State<Body> {
 
   final _inputLoginHandler = TextEditingController();
   final _inputPasswordHandler = TextEditingController();
+  final LoginService loginService = LoginService(); 
+  final storage = const FlutterSecureStorage();
 
-  void _handleSubmit() {
-    if(_inputPasswordHandler.text == "admin" && _inputLoginHandler.text == "admin"){
-      Navigator.pushNamed(context, Home.routeName);
-      debugPrint("Login success");
-    }else{
-      debugPrint("Login failed");
+  void _handleSubmit() async {
+
+    var credential = json.encode({
+      "username": _inputLoginHandler.text,
+      "password": _inputPasswordHandler.text
+    });
+
+    var response = await loginService.login(credential);
+
+    if(response.idToken != ""){
+      storage.write(key: "jwt", value: response.idToken);
+      Navigator.push(context, 
+        MaterialPageRoute(
+          builder: (context) => Home.fromBase64(response.idToken)
+        )
+      );
     }
   }
 
@@ -46,6 +62,7 @@ class _LoginState extends State<Body> {
             children: <Widget>[
             SizedBox(height: size.height * 0.07),
             RoundContainer(
+              height: 50,
               color: kColorPrimaryLight,
               child: InputField(
               inputLoginHandler: _inputLoginHandler, 
@@ -55,6 +72,7 @@ class _LoginState extends State<Body> {
               ),
             ),
             RoundContainer(
+              height: 50,
               color: kColorPrimaryLight,
               child: InputField(
                 inputLoginHandler: _inputPasswordHandler, 
@@ -66,6 +84,7 @@ class _LoginState extends State<Body> {
             ),
             SizedBox(height: size.height * 0.03),
             RoundContainer(
+              height: 50,
               color: kColorPrimary,
               child: GestureDetector(
                 onTap: (){
