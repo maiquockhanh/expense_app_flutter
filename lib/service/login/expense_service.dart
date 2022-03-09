@@ -27,7 +27,6 @@ class Expense {
     this.merchant,
     this.date,
     this.status,
-    this.user,
   });
         
     final int? id;
@@ -36,18 +35,16 @@ class Expense {
     final String? merchant;
     final String? date;
     final bool? status;
-    final String? user;
                
     factory Expense.fromJson(Map<String, dynamic> json) 
     {
       return Expense(
-        id: json['id'] ?? "",
+        id: json['id'] ?? 0,
         category: Category.fromJson(json['category']), 
         amount: json['amount'] as int, 
         merchant: json['merchant'],
         date: json['date']?? "",
         status: json['status'] == "APROVED",
-        user: json['applicationUser'] ?? "",
       );
     }
 }
@@ -58,9 +55,11 @@ class ExpenseService {
   var url = baseUrl;
 
   Future<bool> create(String body, String jwt) async {
+
+    debugPrint(body);
     final response = await http.post(
       Uri.parse(
-        'http://192.168.1.32:8080/api/expenses'
+        '$baseUrl/api/expenses'
       ), 
       headers: {
         "Content-Type": "application/json",
@@ -73,9 +72,8 @@ class ExpenseService {
 
   }
   
-  Future<List<Expense>> getAll(String jwt) async {
-    debugPrint("Loading expense data");
-    final response = await http.get(
+  Future<List<Expense>> getAll(String jwt, http.Client client) async {
+    final response = await client.get(
       Uri.parse(
         '$baseUrl/api/expenses'
       ), 
@@ -85,18 +83,22 @@ class ExpenseService {
         'Authorization': 'Bearer $jwt',
       },
     );
-    
-    List<Expense> epxenses = [];
-    var num = 0;
-    json.decode(response.body).forEach(
-      (e){
-        num++;
-        epxenses.add(Expense.fromJson(e));
-        debugPrint(num.toString());
-      }
-    );
-    //debugPrint(epxenses.toString());
 
-    return epxenses;
+    if (response.statusCode == 200) {
+      List<Expense> epxenses = [];
+
+      json.decode(response.body).forEach(
+        (e){
+          epxenses.add(Expense.fromJson(e));
+        }
+      );
+
+      return epxenses;
+    } 
+    else {
+      throw Exception('Failed to load expense');
+    }
+    
   }
+
 }

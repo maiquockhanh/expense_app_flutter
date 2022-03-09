@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-import 'package:flutter_application_1/components/input.dart';
 import 'package:flutter_application_1/components/round_container.dart';
 import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/service/category.dart';
@@ -11,16 +10,19 @@ class ExpenseUpdate extends StatefulWidget {
   const ExpenseUpdate({ 
     Key? key,
     required this.jwt,
-    required this.categories
+    required this.categories,
+    required this.navigation,
   }) : super(key: key);
 
   final String jwt;
   final List<Category> categories;
+  final Function navigation;
 
-  factory ExpenseUpdate.fromBase64(String jwt, List<Category> categories) =>
+  factory ExpenseUpdate.fromBase64(String jwt, List<Category> categories, Function navigation) =>
   ExpenseUpdate(
     jwt: jwt,
     categories: categories,
+    navigation: navigation,
   );
 
   @override
@@ -33,20 +35,11 @@ class _ExpenseUpdateState extends State<ExpenseUpdate> {
   Category? dropdownValue;
   _handleSubmit(){
 
-// {
-//   "merchant": "string",
-//   "amount": 0,
-//   "status": "WAITING_FOR_APPROVAL",
-//   "category": {
-//     "id": 1,
-//     "name": "Table"
-//   }
-// }
-
     var form = json.encode({
       "amount": int.parse(_inputAmountHandler.text),
       "merchant": _inputMerchantHandler.text,
       "status": "WAITING_FOR_APPROVAL",
+      "date": DateTime.now().toString().split(' ')[0],
       "category": {
         "id": dropdownValue?.id,
         "name": dropdownValue?.name
@@ -54,7 +47,7 @@ class _ExpenseUpdateState extends State<ExpenseUpdate> {
     });
 
     ExpenseService().create(form, widget.jwt);
-    
+    widget.navigation();
 
   }
   final _inputAmountHandler = TextEditingController();

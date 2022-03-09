@@ -21,11 +21,13 @@ class LoginService {
   Future<JWT> login(Object credential) async {
     final response = await http.post(
       Uri.parse(
-        'http://192.168.1.32:8080/api/authenticate'
+        '$baseUrl/api/authenticate'
       ), 
       headers: {"Content-Type": "application/json"},
       body: credential
     );
+
+    debugPrint(response.toString());
     
     if (response.statusCode == 200) {
       return JWT.fromJson(jsonDecode(response.body));

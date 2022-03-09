@@ -9,4 +9,4 @@ const kColorSecondaryLight = Color(0xFFC3FDFF);
 const kColorSecondaryDark = Color(0xFF5D99C6);
 const kColorTextOnSecondary = Color(0xFF8D6E63);
 
-const baseUrl = "http://192.168.1.32:8080";
+const baseUrl = "http://192.168.1.15:8080";

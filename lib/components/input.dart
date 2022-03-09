@@ -8,13 +8,15 @@ class InputField extends StatelessWidget {
     required this.hintText,
     required this.icon,
     this.suffixIcon,
-    required TextEditingController inputLoginHandler,
+    required TextEditingController inputLoginHandler, 
+    required this.validateErrorText,
   }) : _inputLoginHandler = inputLoginHandler, super(key: key);
 
   final bool isObscure;
   final String hintText;
   final IconData icon;
   final IconData? suffixIcon;
+  final String validateErrorText;
   final TextEditingController _inputLoginHandler;
 
   @override
@@ -33,7 +35,7 @@ class InputField extends StatelessWidget {
       controller: _inputLoginHandler,
       validator: (String? value) {
         if (value == null || value.isEmpty) {
-          return 'Please enter login';
+          return validateErrorText;
         }
         return null;
       },

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Home/components/expense/card.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/service/data.dart';
 import 'package:flutter_application_1/service/login/expense_service.dart';
 
@@ -22,7 +22,7 @@ class ExpenseList extends StatelessWidget {
     return SizedBox(
       height: double.infinity,
       child: FutureBuilder(
-        future: expenseService.getAll(jwt),
+        future: expenseService.getAll(jwt, http.Client()),
         builder: (context, snapshot) =>
           snapshot.hasData? 
           //   DataTable(
@@ -55,8 +55,7 @@ class ExpenseList extends StatelessWidget {
                       date: (snapshot.data as List<Expense>)[index].date ?? "",
                       status: (snapshot.data as List<Expense>)[index].status ?? false,
                       merchant: (snapshot.data as List<Expense>)[index].merchant ?? "",
-                      user: (snapshot.data as List<Expense>)[index].user ?? "",
-                      category: (snapshot.data as List<Expense>)[index].category!.name ?? "",
+                      category: (snapshot.data as List<Expense>)[index].category!.name ,
                       changeFlex: onDetail,
                     );
                   },

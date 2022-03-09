@@ -14,12 +14,20 @@ class Category {
     final int id;
     final String name;
                
-    factory Category.fromJson(Map<String, dynamic> json) 
+    factory Category.fromJson(Map<String, dynamic>? json) 
     {
-      return Category(
-        id: json['id'],
-        name: json['name'], 
-      );
+      if (json == null){
+        return Category(
+          id: 0,
+          name: "", 
+        );
+      }
+      else{
+        return Category(
+          id: json['id']?? 0,
+          name: json['name'] ?? "", 
+        );
+      }
     }
 }
 
@@ -48,6 +56,19 @@ class CategoryService {
       }
     );
     return categories;
+  }
+
+  Future<List<Category>> getAllMmock(String jwt) async {
+    debugPrint("Loading Category data");
+    return [
+      Category(id: 1, name: "cat1"),
+      Category(id: 2, name: "cat2"),
+      Category(id: 3, name: "cat3"),
+      Category(id: 4, name: "cat4"),
+      Category(id: 5, name: "cat5"),
+      Category(id: 6, name: "cat6"),
+      Category(id: 7, name: "cat7"),
+    ];
   }
 
 

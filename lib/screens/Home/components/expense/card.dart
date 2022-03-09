@@ -11,7 +11,6 @@ class ExpenseCard extends StatefulWidget {
     required this.date,
     required this.category,
     required this.merchant,
-    required this.user,
     required this.status,
     required this.changeFlex,
   }) : super(key: key);
@@ -21,7 +20,6 @@ class ExpenseCard extends StatefulWidget {
   final String date;
   final String? category;
   final String? merchant;
-  final String? user;
   final bool status;
   final Function changeFlex;
 
@@ -157,14 +155,6 @@ class _ExpenseCardState extends State<ExpenseCard> {
                         ),
                         Text(
                           "Merchant: "+ (widget.merchant??""),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black
-                          ),
-                        ),
-                        Text(
-                          "User: " + (widget.user??""),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

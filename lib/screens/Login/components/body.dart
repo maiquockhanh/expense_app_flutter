@@ -65,10 +65,11 @@ class _LoginState extends State<Body> {
               height: 50,
               color: kColorPrimaryLight,
               child: InputField(
-              inputLoginHandler: _inputLoginHandler, 
-              isObscure: false, 
-              icon: Icons.person, 
-              hintText: "Login",
+                inputLoginHandler: _inputLoginHandler, 
+                isObscure: false, 
+                icon: Icons.person, 
+                hintText: "Login",
+                validateErrorText: "Please enter user name",
               ),
             ),
             RoundContainer(
@@ -79,7 +80,8 @@ class _LoginState extends State<Body> {
                 isObscure: true, 
                 icon: Icons.lock, 
                 suffixIcon: Icons.visibility, 
-                hintText: "Password"
+                hintText: "Password",
+                validateErrorText: "Please enter password",
               ),
             ),
             SizedBox(height: size.height * 0.03),
@@ -87,9 +89,11 @@ class _LoginState extends State<Body> {
               height: 50,
               color: kColorPrimary,
               child: GestureDetector(
+                key: const Key("login_button"),
                 onTap: (){
                   if(_formKey.currentState!.validate()){
                     _handleSubmit();
+                    debugPrint("Login button is tapped");
                   }
                 },
                 child: const TextButton(

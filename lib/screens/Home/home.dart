@@ -47,6 +47,12 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void _changeList(){
+    setState(() {
+      _isList = !_isList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -62,7 +68,7 @@ class _HomeState extends State<Home> {
         builder: 
         (context, snapshot) =>
           snapshot.hasData? 
-          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>)
+          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>, _changeList)
           :
           snapshot.hasError ? const Text("An error occured"): const Text("An error occured"),
         //child: ExpenseUpdate.fromBase64(widget.jwt)
@@ -72,7 +78,7 @@ class _HomeState extends State<Home> {
         builder: 
         (context, snapshot) =>
           snapshot.hasData? 
-          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>)
+          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>, _changeList)
           :
           snapshot.hasError ? const Text("An error occured"): const Text("An error occured"),
         //child: ExpenseUpdate.fromBase64(widget.jwt)
@@ -82,7 +88,7 @@ class _HomeState extends State<Home> {
         builder: 
         (context, snapshot) =>
           snapshot.hasData? 
-          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>)
+          ExpenseUpdate.fromBase64(widget.jwt, snapshot.data as List<Category>, _changeList)
           :
           snapshot.hasError ? const Text("An error occured"): const Text("An error occured"),
         //child: ExpenseUpdate.fromBase64(widget.jwt)
@@ -151,9 +157,7 @@ class _HomeState extends State<Home> {
         child: FloatingActionButton(
           onPressed: (() {
             _changeFlex(2);
-            setState(() {
-              _isList = false;
-            });
+            _changeList();
           }),
           child: const Icon(Icons.add),
           backgroundColor: kColorPrimary
