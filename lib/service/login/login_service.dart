@@ -18,7 +18,7 @@ class JWT{
 class LoginService {
   final url = baseUrl; 
 
-  Future<JWT> login(Object credential) async {
+  Future<JWT> login(Object? credential) async {
     final response = await http.post(
       Uri.parse(
         '$baseUrl/api/authenticate'

@@ -33,7 +33,7 @@ class RoundContainer extends StatelessWidget {
           //child: child,
         ),
         Container(
-          width: double.infinity,
+          width: widthWeight != null? size.width*widthWeight! :size.width*0.8,
           margin: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 1.0),
           child: child,

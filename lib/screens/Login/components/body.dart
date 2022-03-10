@@ -6,6 +6,7 @@ import 'package:flutter_application_1/constants.dart';
 import 'package:flutter_application_1/components/input.dart';
 import 'package:flutter_application_1/screens/Home/home.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/service/login/login_service.dart';
 
 class Body extends StatefulWidget {
@@ -23,9 +24,15 @@ class _LoginState extends State<Body> {
   final _inputPasswordHandler = TextEditingController();
   final LoginService loginService = LoginService(); 
   final storage = const FlutterSecureStorage();
+  String error = "";
+
+  void showError(String text) {
+    setState(() {
+      error = text;
+    });
+  }
 
   void _handleSubmit() async {
-
     var credential = json.encode({
       "username": _inputLoginHandler.text,
       "password": _inputPasswordHandler.text
@@ -40,6 +47,9 @@ class _LoginState extends State<Body> {
           builder: (context) => Home.fromBase64(response.idToken)
         )
       );
+    }
+    else{
+      showError("Username or Password is invalid");
     }
   }
 
@@ -65,6 +75,7 @@ class _LoginState extends State<Body> {
               height: 50,
               color: kColorPrimaryLight,
               child: InputField(
+                key: const Key("username_field"),
                 inputLoginHandler: _inputLoginHandler, 
                 isObscure: false, 
                 icon: Icons.person, 
@@ -76,6 +87,7 @@ class _LoginState extends State<Body> {
               height: 50,
               color: kColorPrimaryLight,
               child: InputField(
+                key: const Key("password_field"),
                 inputLoginHandler: _inputPasswordHandler, 
                 isObscure: true, 
                 icon: Icons.lock, 
@@ -85,12 +97,15 @@ class _LoginState extends State<Body> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
+            error == "" ? Container(): 
+                Text(error, style: const TextStyle(color: Colors.red, fontSize: 13),),
             RoundContainer(
               height: 50,
               color: kColorPrimary,
               child: GestureDetector(
                 key: const Key("login_button"),
                 onTap: (){
+                  showError("");
                   if(_formKey.currentState!.validate()){
                     _handleSubmit();
                     debugPrint("Login button is tapped");

@@ -16,7 +16,9 @@ void main() {
     Login login = const Login();
 
     await tester.pumpWidget(makeTestableWidget(child: login));
+
     await tester.tap(find.byKey(const Key('login_button')));
+
     await tester.pump();
 
     //EXPECT
