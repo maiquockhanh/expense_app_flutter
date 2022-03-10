@@ -19,6 +19,7 @@ class Body extends StatefulWidget {
 
 class _LoginState extends State<Body> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _inputLoginHandler = TextEditingController();
   final _inputPasswordHandler = TextEditingController();
@@ -40,17 +41,30 @@ class _LoginState extends State<Body> {
 
     var response = await loginService.login(credential);
 
-    if(response.idToken != ""){
-      storage.write(key: "jwt", value: response.idToken);
-      Navigator.push(context, 
-        MaterialPageRoute(
-          builder: (context) => Home.fromBase64(response.idToken)
-        )
-      );
+    if (response.idToken == ""){
+      showError("Username or Password is invalid");
+      return;
     }
     else{
-      showError("Username or Password is invalid");
+      storage.write(key: "jwt", value: response.idToken);
+      if(_scaffoldKey.currentContext != null) {
+        BuildContext ctx = _scaffoldKey.currentContext!;
+        Navigator.push(ctx, 
+          MaterialPageRoute(
+            builder: (context) => Home.fromBase64(response.idToken)
+          )
+        );
+      }
     }
+
+    // if(response.idToken != ""){
+    //   storage.write(key: "jwt", value: response.idToken);
+    //   Navigator.push(context, 
+    //     MaterialPageRoute(
+    //       builder: (context) => Home.fromBase64(response.idToken)
+    //     )
+    //   );
+    // }
   }
 
   @override

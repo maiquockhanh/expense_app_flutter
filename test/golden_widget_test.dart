@@ -66,7 +66,6 @@ void main() {
 
     await tester.pumpWidget(makeTestableWidget(child: const Login()));
     await tester.enterText(find.byKey(const Key("username_field")), 'a');
-    await tester.pump();
     await tester.enterText(find.byKey(const Key("password_field")), 'a');
     await tester.pump();
     await tester.tap(find.byKey(const Key('login_button')));
